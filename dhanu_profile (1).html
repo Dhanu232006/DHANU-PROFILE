@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHANANJAY PROfile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:#0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Animated Gradient Background */
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Neon Orbs */
+        .floating-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #ff00ff;
+            top: -200px;
+            right: -200px;
+            animation: float1 20s ease-in-out infinite;
+            box-shadow: 0 0 200px #ff00ff;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: #00ffff;
+            bottom: -150px;
+            left: -150px;
+            animation: float2 25s ease-in-out infinite;
+            box-shadow: 0 0 200px #00ffff;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #ffff00;
+            top: 50%;
+            right: -100px;
+            animation: float3 18s ease-in-out infinite;
+            box-shadow: 0 0 200px #ffff00;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, -50px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, 30px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(20, 20, 50, 0.85);
+            backdrop-filter: blur(30px);
+            border-radius: 40px;
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 100px 300px rgba(0, 0, 0, 0.7), 
+                        0 0 100px rgba(255, 0, 255, 0.3),
+                        inset 0 0 100px rgba(0, 255, 255, 0.05);
+            overflow: hidden;
+            animation: cardFloat 3s ease-in-out infinite, cardGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes cardGlow {
+            0%, 100% { box-shadow: 0 100px 300px rgba(0, 0, 0, 0.7), 0 0 60px rgba(255, 0, 255, 0.2); }
+            50% { box-shadow: 0 100px 300px rgba(0, 0, 0, 0.7), 0 0 120px rgba(255, 0, 255, 0.4); }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(0, 255, 200, 0.3));
+            padding: 100px 50px;
+            text-align: center;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.5), transparent);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+            animation: morphBlob1 8s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent);
+            border-radius: 50%;
+            bottom: -250px;
+            left: -250px;
+            animation: morphBlob2 10s ease-in-out infinite;
+        }
+
+        @keyframes morphBlob1 {
+            0%, 100% { border-radius: 50%; transform: translate(0, 0) scale(1); }
+            25% { border-radius: 40% 60% 70% 30%; transform: translate(-30px, -30px) scale(1.1); }
+            50% { border-radius: 30% 70% 30% 70%; transform: translate(30px, 30px) scale(0.9); }
+            75% { border-radius: 60% 40% 30% 70%; transform: translate(-50px, 50px) scale(1.05); }
+        }
+
+        @keyframes morphBlob2 {
+            0%, 100% { border-radius: 50%; transform: translate(0, 0) scale(1); }
+            33% { border-radius: 60% 40% 30% 70%; transform: translate(30px, -50px) scale(1.1); }
+            66% { border-radius: 40% 60% 70% 30%; transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.6), rgba(0, 255, 255, 0.6));
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            box-shadow: 0 0 150px rgba(255, 0, 255, 0.7), inset 0 0 50px rgba(0, 255, 255, 0.5);
+            animation: picFloat 3s cubic-bezier(0.34, 1.56, 0.64, 1) infinite, 
+                       picGlow 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes picFloat {
+            0%, 100% { transform: translateY(0) rotateZ(0deg) scale(1); }
+            33% { transform: translateY(-25px) rotateZ(3deg) scale(1.05); }
+            66% { transform: translateY(-10px) rotateZ(-3deg) scale(1.02); }
+        }
+
+        @keyframes picGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.6)); }
+            50% { filter: drop-shadow(0 0 50px rgba(255, 0, 255, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.6)); }
+        }
+
+        .profile-pic::before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            border: 3px dashed rgba(0, 255, 255, 0.6);
+            animation: rotatePic 3s linear infinite;
+        }
+
+        @keyframes rotatePic {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 80px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff, #00ffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShift 4s ease infinite, titleBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: 4px;
+            text-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.3));
+        }
+
+        @keyframes textShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleBounce {
+            from { opacity: 0; transform: translateY(-50px) scale(0.8) rotateX(30deg); }
+            to { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); }
+        }
+
+        .role {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #00ffff;
+            font-weight: 700;
+            animation: roleSlide 1s ease-out 0.3s both;
+            text-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+
+        @keyframes roleSlide {
+            from { opacity: 0; transform: translateX(-80px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .location {
+            font-size: 22px;
+            color: #ff00ff;
+            animation: locationSlide 1s ease-out 0.5s both;
+            text-shadow: 0 0 25px rgba(255, 0, 128, 0.7);
+            letter-spacing: 1px;
+        }
+
+        @keyframes locationSlide {
+            from { opacity: 0; transform: translateX(80px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Content */
+        .content {
+            padding: 70px 50px;
+        }
+
+        .section {
+            margin-bottom: 70px;
+            animation: sectionAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.5s; }
+        .section:nth-child(2) { animation-delay: 0.6s; }
+        .section:nth-child(3) { animation-delay: 0.7s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+        .section:nth-child(5) { animation-delay: 0.9s; }
+        .section:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes sectionAppear {
+            from {
+                opacity: 0;
+                transform: translateY(100px) rotateX(30deg);
+                filter: blur(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            display: inline-block;
+            position: relative;
+            letter-spacing: 1px;
+            animation: titleAppear 0.8s ease-out;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.2));
+        }
+
+        @keyframes titleAppear {
+            from { opacity: 0; transform: translateX(-60px) scaleX(0.5); }
+            to { opacity: 1; transform: translateX(0) scaleX(1); }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            animation: lineGrow 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; left: 0; }
+            to { width: 100%; left: 0; }
+        }
+
+        .about-text, .goal-text {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.15), rgba(0, 255, 200, 0.15));
+            border: 2px solid rgba(255, 0, 255, 0.5);
+            padding: 40px;
+            border-radius: 25px;
+            color: #e0e0e0;
+            line-height: 2.2;
+            font-size: 18px;
+            font-style: italic;
+            box-shadow: 0 30px 80px rgba(255, 0, 128, 0.2), inset 0 0 50px rgba(0, 255, 255, 0.08);
+            animation: boxFloat 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-text::before, .goal-text::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 255, 0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .about-text > *, .goal-text > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes boxFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(0, 255, 200, 0.3));
+            border: 3px solid rgba(255, 0, 255, 0.6);
+            border-radius: 25px;
+            padding: 45px 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: skillPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.4), inset 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.25s; }
+        .skill-card:nth-child(2) { animation-delay: 0.4s; }
+        .skill-card:nth-child(3) { animation-delay: 0.55s; }
+
+        @keyframes skillPop {
+            from {
+                opacity: 0;
+                transform: scale(0) rotateZ(-180deg);
+                filter: blur(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateZ(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: lightFlash 2.5s infinite;
+        }
+
+        @keyframes lightFlash {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .skill-card:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.5), rgba(0, 255, 200, 0.5));
+            border-color: rgba(0, 255, 255, 0.9);
+            transform: translateY(-25px) scale(1.15) rotateZ(5deg);
+            box-shadow: 0 50px 150px rgba(255, 0, 255, 0.7), inset 0 0 50px rgba(0, 255, 255, 0.4);
+        }
+
+        .skill-category {
+            font-weight: 900;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #00ffff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .skill-items {
+            font-size: 16px;
+            line-height: 2.2;
+            color: #e0e0e0;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.2), rgba(100, 50, 200, 0.2));
+            border: 3px solid rgba(0, 255, 200, 0.5);
+            border-radius: 25px;
+            padding: 45px;
+            margin-bottom: 35px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: projectSlide 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.3), inset 0 0 30px rgba(0, 255, 255, 0.05);
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.2s; }
+        .project-card:nth-child(2) { animation-delay: 0.35s; }
+        .project-card:nth-child(3) { animation-delay: 0.5s; }
+
+        @keyframes projectSlide {
+            from {
+                opacity: 0;
+                transform: translateX(150px) rotateY(90deg);
+                filter: blur(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.6), transparent);
+            animation: slideShine 2s infinite;
+        }
+
+        @keyframes slideShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .project-card:hover {
+            border-color: rgba(255, 0, 255, 0.8);
+            background: linear-gradient(135deg, rgba(0, 200, 255, 0.35), rgba(100, 50, 200, 0.35));
+            transform: translateX(20px) translateY(-15px) scale(1.08);
+            box-shadow: 0 60px 150px rgba(0, 255, 200, 0.5), inset 0 0 40px rgba(255, 0, 255, 0.2);
+        }
+
+        .project-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #00ffff;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            letter-spacing: 0.5px;
+        }
+
+        .project-desc {
+            color: #d0d0d0;
+            line-height: 2;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .focus-item {
+            display: flex;
+            align-items: center;
+            padding: 22px 0;
+            font-size: 18px;
+            color: #e0e0e0;
+            position: relative;
+            margin-bottom: 15px;
+            animation: itemSlide 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+        }
+
+        .focus-item:nth-child(1) { animation-delay: 0.15s; }
+        .focus-item:nth-child(2) { animation-delay: 0.3s; }
+        .focus-item:nth-child(3) { animation-delay: 0.45s; }
+
+        @keyframes itemSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+                filter: blur(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        .focus-item::before {
+            content: '▶';
+            margin-right: 20px;
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 16px;
+            animation: arrowPulse 1.5s ease-in-out infinite;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(15px) scale(1.3); }
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 50px;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.9), rgba(0, 255, 255, 0.9));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 0 60px rgba(255, 0, 255, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: buttonPop 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation-fill-mode: both;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .contact-link:nth-child(1) { animation-delay: 0.5s; }
+        .contact-link:nth-child(2) { animation-delay: 0.65s; }
+
+        @keyframes buttonPop {
+            from {
+                opacity: 0;
+                transform: scale(0) rotateZ(-180deg);
+                filter: blur(15px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateZ(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: buttonShine 2s infinite;
+        }
+
+        @keyframes buttonShine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .contact-link:hover {
+            transform: scale(1.2) translateY(-10px) rotateZ(3deg);
+            box-shadow: 0 60px 150px rgba(255, 0, 255, 0.8), inset 0 0 50px rgba(0, 255, 255, 0.6);
+            background: linear-gradient(135deg, rgba(0, 255, 255, 1), rgba(255, 0, 255, 1));
+        }
+
+        .contact-link:active {
+            transform: scale(0.9);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(0, 255, 200, 0.2));
+            padding: 50px;
+            text-align: center;
+            color: #00ffff;
+            font-size: 17px;
+            border-top: 3px solid rgba(255, 0, 255, 0.6);
+            animation: footerFade 1.5s ease-out 1.8s both;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            letter-spacing: 1px;
+            box-shadow: inset 0 0 50px rgba(255, 0, 255, 0.1);
+        }
+
+        @keyframes footerFade {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff00ff, #00ffff, transparent);
+            margin: 50px 0;
+            animation: expandDiv 1.2s ease-out;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+        }
+
+        @keyframes expandDiv {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 48px; }
+            .header { padding: 60px 30px; min-height: 350px; }
+            .content { padding: 40px 20px; }
+            .skills-grid { grid-template-columns: 1fr; gap: 25px; }
+            .profile-pic { width: 130px; height: 130px; font-size: 60px; }
+            .section-title { font-size: 28px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 36px; }
+            .profile-pic { width: 110px; height: 110px; font-size: 50px; }
+            .header { padding: 40px 20px; min-height: 300px; }
+            .content { padding: 25px 15px; }
+            .section-title { font-size: 22px; }
+            .about-text, .goal-text { padding: 25px; font-size: 16px; }
+            .skill-card { padding: 30px 15px; }
+            .project-card { padding: 30px; }
+            .contact-link { padding: 15px 35px; font-size: 16px; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff00ff, #00ffff);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #00ffff, #ff00ff);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="bg"></div>
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="header-content">
+                    <div class="profile-pic">👨‍💻</div>
+                    <h1>DHANANJAY</h1>
+                    <p class="role">🎓 BCA Student | Aspiring Backend Developer</p>
+                    <p class="location">📍 India</p>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="section">
+                    <div class="section-title">🧠 About Me</div>
+                    <div class="divider"></div>
+                    <div class="about-text">
+                        "I am a BCA student focused on building strong fundamentals in Java and backend development. I believe in a skills-first approach and prefer consistent learning over shortcuts. Currently, I am improving my problem-solving skills through DSA and working on real-world projects to strengthen my development skills."
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💻 Skills</div>
+                    <div class="divider"></div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-category">🧩 Programming</div>
+                            <div class="skill-items">Java (Core + OOP)<br>JavaScript <br>PHP</div>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-category">🌐 Web</div>
+                            <div class="skill-items">HTML, CSS<br>API Integration</div>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-category">⚙️ Tools</div>
+                            <div class="skill-items">VS Code<br>SpringToolSuite<br>Git (basic)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🚀 Current Focus</div>
+                    <div class="divider"></div>
+                    <div class="focus-item">Data Structures & Algorithms (DSA)</div>
+                    <div class="focus-item">Spring Boot (Backend Development)</div>
+                    <div class="focus-item">Learning Backend Principles</div>
+                    <div class="focus-item">Building real-world projects</div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📁 Projects</div>
+                    <div class="divider"></div>
+                    <div class="project-card">
+                        <div class="project-title">🔹 Smart Lab Issue Tracker</div>
+                        <div class="project-desc">Tracks lab system issues and shows working / not working status. Helps manage lab efficiently.</div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">🔹 Weather App (API Project)</div>
+                        <div class="project-desc">Fetches real-time weather data, displays temperature, humidity, forecast using external API integration.</div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">🔹 FocusLens (Chrome Extension)</div>
+                        <div class="project-desc">Tracks browsing activity, classifies websites as productive/unproductive. Helps improve focus and time management.</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🎯 Goal</div>
+                    <div class="divider"></div>
+                    <div class="goal-text">
+                        "To become a skilled backend developer with strong problem-solving ability and real-world project experience."
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📞 Contact</div>
+                    <div class="divider"></div>
+                    <div class="contact-info">
+                        <a href="mailto:dhananjaymendon94@gmail.com" class="contact-link">✉️ Email</a>
+                        <a href="tel:8050011590" class="contact-link">📱 Call</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                🌟This is  All about - Dhananjay 🌟
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Particle animation on canvas
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 3;
+                this.vy = (Math.random() - 0.5) * 3;
+                this.size = Math.random() * 3 + 1;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.color = ['#ff00ff', '#00ffff', '#ffff00'][Math.floor(Math.random() * 3)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.opacity -= 0.008;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        const particles = [];
+
+        function createParticles() {
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, i) => {
+                if (p.opacity <= 0) {
+                    particles.splice(i, 1);
+                } else {
+                    p.update();
+                    p.draw();
+                }
+            });
+
+            if (particles.length < 50) {
+                for (let i = 0; i < 5; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        createParticles();
+        animateParticles();
+
+        // Mouse tracking particles
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.5) {
+                const p = new Particle();
+                p.x = e.clientX;
+                p.y = e.clientY;
+                p.vx = (Math.random() - 0.5) * 6;
+                p.vy = (Math.random() - 0.5) * 6;
+                particles.push(p);
+            }
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Scroll parallax
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.skill-card, .project-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const scrolled = window.scrollY;
+                const offset = rect.top - scrolled;
+
+                if (offset < window.innerHeight && offset > -card.offsetHeight) {
+                    const angle = (offset / window.innerHeight) * 15;
+                    card.style.transform = `perspective(1200px) rotateX(${angle}deg)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
